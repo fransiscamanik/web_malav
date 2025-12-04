@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Malav Jahe Merah — Serbuk Jahe Siap Seduh</title>
+  <style>
+    :root {
+      --bg-dark: #d86f0c;
+      --accent: #e0620e;
+      --card: #110f0c;
+      --muted: #bfbfbf;
+      --glass: rgba(238, 113, 10, 0.03);
+      --radius: 16px;
+      --maxw: 1200px;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg-dark) 0%, #1a0f05 50%, var(--accent) 100%);
+      color: #fff;
+    }
+    .wrap {
+      max-width: var(--maxw);
+      margin: 28px auto;
+      padding: 24px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo {
+      width: 62px;
+      height: 62px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2b1507, #ffb07a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #140b05;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0.6px;
+    }
+    .nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn {
+      background: var(--accent);
+      color: #140b05;
+      padding: 10px 14px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 28px;
+      margin-top: 28px;
+      align-items: center;
+    }
+    .hero-card {
+      background: var(--glass);
+      padding: 28px;
+      border-radius: 20px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    }
+    .hero h2 {
+      font-size: 32px;
+      margin: 0 0 8px;
+    }
+    .hero p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .hero-visual {
+      border-radius: 20px;
+      overflow: hidden;
+      background: linear-gradient(135deg,#3b1e10,#ffb07a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 320px;
+    }
+    .search {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+    }
+    .search input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: 0;
+      background: #111;
+      color: #fff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 28px;
+    }
+    @media (max-width:980px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){.grid{grid-template-columns:1fr}.wrap{padding:12px}}
+    .card{background:var(--card);padding:12px;border-radius:14px;overflow:hidden;position:relative}
+    .prod-img{height:180px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#2a1307,#3b1e10);border-radius:10px;margin-bottom:10px}
+    .prod-img img{max-height:170px;max-width:100%;object-fit:contain}
+    .title{font-weight:700;margin:0 0 6px}
+    .price{font-weight:700;color:var(--accent)}
+    .badge{position:absolute;left:12px;top:12px;background:#ffea;backdrop-filter: blur(4px);color:#140b05;padding:6px 10px;border-radius:999px;font-weight:700}
+    .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+    .variants{display:flex;gap:8px;margin-top:8px}
+    .variant{padding:6px 8px;border-radius:8px;background:#111;border:1px solid rgba(255,255,255,0.03);font-size:13px}
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin-top:26px}
+    .filters{display:flex;gap:8px}
+    .products{margin-top:18px}
+    .product-row{display:flex;gap:12px;align-items:center}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.8));z-index:60}
+    .modal.open{display:flex}
+    .modal-card{background:#0f0f0f;padding:20px;border-radius:16px;max-width:920px;width:92%;display:flex;gap:20px}
+    .modal-card img{max-width:360px;border-radius:12px}
+    .modal-info{flex:1}
+    .close{background:transparent;border:0;color:var(--muted);font-size:20px}
+    footer {
+      margin-top: 40px;
+      padding: 18px 0;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .social-icons {
+      margin-top: 6px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .social-icons a img {
+      width: 28px;
+      height: 28px;
+      filter: brightness(0) invert(1);
+      transition: 0.3s;
+    }
+    .social-icons a:hover img {
+      transform: scale(1.15);
+      filter: brightness(1.2);
+    }
+    .whatsapp-fab {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      background: #25d366;
+      color: #fff;
+      padding: 14px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">MJ</div>
+        <div>
+          <h1>Malav Jahe Merah</h1>
+          <div style="color:var(--muted);font-size:13px">Serbuk jahe siap seduh — alami &amp; nikmat</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a class="btn" href="#produk">Lihat Produk</a>
+        <a class="btn" href="#best-seller">Best Seller</a>
+        <a class="btn" href="#kontak">Kontak</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h2>Selamat datang di Malav Jahe Merah</h2>
+        <p>Serbuk jahe merah siap seduh — diracik dari jahe pilihan. Pilihan varian minuman modern &amp; snack nikmat. Nikmati hangatnya jahe bersahaja setiap hari.</p>
+
+        <div class="search">
+          <input id="searchInput" placeholder="Cari produk, varian, rasa..." />
+          <a class="btn" href="#produk" onclick="filterAll()">Telusuri</a>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:16px">
+          <a class="btn" href="#best-seller">Best Seller</a>
+          <a class="btn" id="btnWhats" href="https://wa.me/6283180267880?text=Halo%20Malav%20Jahe%20Merah%2C%20saya%20ingin%20pesan" target="_blank">Hubungi via WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <!-- Gambar hero disimpan di folder assets/images/hero.jpg -->
+        <img src="../malav_jahe_merah/Foto_Produk/profile.jpeg" alt="Hero" style="max-height:320px">
+      </div>
+    </section>
+
+    <!-- Best seller -->
+    <div class="section-title" id="best-seller">
+      <h3>Best Seller</h3>
+      <div class="filters">
+        <button class="btn" onclick="showCategory('all')">Semua</button>
+        <button class="btn" onclick="showCategory('minuman')">Minuman</button>
+        <button class="btn" onclick="showCategory('serbuk')">Serbuk Jahe Merah</button>
+</div>
+
+    </div>
+
+    <div class="grid" id="productGrid">
+      <!-- Product cards will be injected by JavaScript -->
+    </div>
+
+    <!-- Produk section panjang -->
+    <section class="products" id="produk">
+      <h3>Semua Produk</h3>
+      <p style="color:var(--muted)">Klik gambar untuk melihat detail, pilih varian, lalu tekan "Pesan via WhatsApp".</p>
+      <div id="allList"></div>
+    </section>
+
+    <!-- TENTANG KAMI — Glass Morphism -->
+<section style="
+  margin-top: 50px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 32px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 25px rgba(0,0,0,0.4);
+">
+  <h2 style="margin-top:0; margin-bottom:12px;">Tentang Kami</h2>
+
+  <p style="color:#e0e0e0; line-height:1.7; font-size:15px;">
+    <strong>Malav Jahe Merah</strong> adalah usaha UMKM lokal berbasis rempah yang menghadirkan jahe merah premium dalam produk inovatif dan trendy. 
+    Bermula dari serbuk jahe merah dalam kemasan sachet, kami kini mengembangkan minuman siap saji ala cafe dalam bentuk cup 12 oz dengan 5 varian rasa unik. Berbasis di kota Tebing Tinggi, Sumatera Utara, kami berkomitmen menyediakan minuman sehat yang mendukung gaya hidup modern sambil memanfaatkan kekayaan rempah lokal serta keunikan rempah itu sendiri. 
+  </p>
+
+  <p style="color:#e0e0e0; line-height:1.7; font-size:15px;">
+    <strong>Misi kami adalah:</strong>
+   </p>
+  <p style="color:#e0e0e0; line-height:1.7; font-size:15px;">
+    Menyediakan produk jahe merah berkualitas tinggi yang terjangkau dan mudah diakses.
+   </p>
+  <p style="color:#e0e0e0; line-height:1.7; font-size:15px;">
+   Mengedukasi masyarakat tentang manfaat jahe merah untuk imunitas dan kesehatan.
+   </p>
+  <p style="color:#e0e0e0; line-height:1.7; font-size:15px;">
+    Mendukung petani lokal Sumatera Utara melalui rantai pasok berkelanjutan.
+   </p>
+   
+
+
+
+  </p>
+</section>
+
+      <footer id="kontak">
+      <div>
+        <strong>Malav Jahe Merah</strong><br>
+        Kota Tebing Tinggi<br>
+        Email: info@malavjahemerah.id
+      </div>
+      <div style="text-align:right">
+        <div>Ikuti kami di:</div>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/malav_ginger_official?igsh=MTlxenhqdnF2eHoz" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+          </a>
+          <a href="https://www.tiktok.com/@dwzz452?_r=1&_t=ZS-91YJi7JMbce/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok">
+          </a>
+          <a href="https://www.facebook.com/share/1Bt2fcrENC/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook">
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <a class="whatsapp-fab" id="waFab"
+     href="https://wa.me/6283119234509?text=Halo%20Malav%20Jahe%20Merah%2C%20saya%20ingin%20pesan"
+     target="_blank">WhatsApp</a>
+
+  <a class="whatsapp-fab" id="waFab" href="https://wa.me/6283119234509?text=Halo%20Malav%20Jahe%20Merah%2C%20saya%20ingin%20pesan" target="_blank">WhatsApp</a>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <img id="modalImg" src="" alt="produk"/>
+      <div class="modal-info">
+        <button class="close" onclick="closeModal()">✕</button>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc" style="color:var(--muted)"></p>
+        <div style="margin-top:12px"><strong class="price" id="modalPrice"></strong></div>
+        <div class="variants" id="modalVariants"></div>
+        <div style="margin-top:14px;display:flex;gap:10px">
+          <a class="btn" id="orderBtn" href="#" target="_blank">Pesan via WhatsApp</a>
+          <button class="btn" onclick="closeModal()">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- DATA PRODUK: gunakan nama file gambar sesuai folder assets/images/ ---
+    const PRODUCTS = [
+      // Minuman (varian)
+      {id:1, category:'minuman', title:'Ger Lemon Honey', price:'Rp 20.000', img:'../malav_jahe_merah/Foto_Produk/lemon honey.png', desc:'Kombinasi manis-asam untuk imunitas dan kesegaran.', variants:['Original','Less Sugar'] , bestseller:true},
+      {id:2, category:'minuman', title:'Greentee RedGingger', price:'Rp 20.000', img:'../malav_jahe_merah/Foto_Produk/Greentee.png', desc:'Green tea dengan sentuhan jahe merah, segar dan hangat.', variants:['Less Sugar','Honey'] , bestseller:true},
+      {id:3, category:'minuman', title:'Es Tea Ger', price:'Rp 15.000', img:'../malav_jahe_merah/Foto_Produk/es tea.png', desc:'Pilihan vegan dengan sentuhan teh tropis yang ringan.', variants:['Original','Less Sugar'] , bestseller:false},
+      {id:4, category:'minuman', title:'Jahe Merah Original', price:'Rp 10.000', img:'../malav_jahe_merah/Foto_Produk/original.png', desc:'Rasa klasik jahe merah murni, segar dan menghangatkan.', variants:['Pack Kecil','Pack Besar'], bestseller:true},
+      {id:5, category:'minuman', title:'Ger Coffe Creamy', price:'Rp 10.000', img:'../malav_jahe_merah/Foto_Produk/coffe creamy.png', desc:'Rasa kopi yang khas di padu creamy yang lembut, cocok untuk pecinta kopi.', variants:['Pack Kecil','Pack Besar'], bestseller:false},
+      //Serbuk Jahe Merah
+      {id:6, category:'serbuk', title:'Serbuk Jahe Merah', price:'Rp 25.000', img:'../malav_jahe_merah/Foto_Produk/Serbuk_jahe.jpeg', desc:'Jahe merah organik usia 11-12 bulan, mudah diseduh untuk minuman hangat/dingin, kaya antioksidan, meningkatkan imunitas, dan membantu pencernaan.', variants:['Pack Kecil','Pack Besar'], bestseller:false},
+    ];
+
+    const productGrid = document.getElementById('productGrid');
+    const allList = document.getElementById('allList');
+
+    function createCard(p){
+      const div = document.createElement('div');div.className='card';
+      if(p.bestseller) div.innerHTML = `<div class="badge">Best</div>`+`
+        <div class="prod-img"><img src="${p.img}" alt="${p.title}"></div>
+        <div><h4 class="title">${p.title}</h4><div class="price">${p.price}</div><div style="color:var(--muted);margin-top:6px">${p.desc}</div></div>
+        <div class="meta"><div style="font-size:13px;color:var(--muted)">Kategori: ${p.category}</div><div><button class="btn" onclick='openModal(${p.id})'>Lihat</button></div></div>`;
+      else div.innerHTML = `
+        <div class="prod-img"><img src="${p.img}" alt="${p.title}"></div>
+        <div><h4 class="title">${p.title}</h4><div class="price">${p.price}</div><div style="color:var(--muted);margin-top:6px">${p.desc}</div></div>
+        <div class="meta"><div style="font-size:13px;color:var(--muted)">Kategori: ${p.category}</div><div><button class="btn" onclick='openModal(${p.id})'>Lihat</button></div></div>`;
+      return div;
+    }
+
+    function renderGrid(filter='all'){
+      productGrid.innerHTML='';
+      const list = PRODUCTS.filter(p=> filter==='all' ? true : p.category===filter);
+      list.forEach(p=> productGrid.appendChild(createCard(p)));
+    }
+
+    // render long list
+    function renderList(){
+      allList.innerHTML='';
+      PRODUCTS.forEach(p=>{
+        const r = document.createElement('div');r.className='card';r.style.marginBottom='12px';
+        r.innerHTML = `<div style="display:flex;gap:12px;align-items:center"><div style="width:120px"><img src="${p.img}" style="width:100%;border-radius:8px"></div><div style="flex:1"><h4 style="margin:0">${p.title}</h4><div style="color:var(--muted)">${p.desc}</div><div style="margin-top:8px"><strong class="price">${p.price}</strong></div><div style="margin-top:8px"><button class="btn" onclick='openModal(${p.id})'>Pilih Varian & Pesan</button></div></div></div>`;
+        allList.appendChild(r);
+      });
+    }
+
+    renderGrid('all');renderList();
+
+    // Filter functions
+    function showCategory(cat){renderGrid(cat);}
+    function filterAll(){const q=document.getElementById('searchInput').value.toLowerCase();if(!q){renderGrid();return;} const filtered=PRODUCTS.filter(p=> (p.title+ ' '+p.desc+' '+p.category).toLowerCase().includes(q)); productGrid.innerHTML='';filtered.forEach(p=> productGrid.appendChild(createCard(p))); }
+
+    // Modal logic
+    const modal = document.getElementById('modal');
+    function openModal(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      document.getElementById('modalImg').src = p.img;
+      document.getElementById('modalTitle').textContent = p.title;
+      document.getElementById('modalDesc').textContent = p.desc;
+      document.getElementById('modalPrice').textContent = p.price;
+      const mv = document.getElementById('modalVariants'); mv.innerHTML='';
+      p.variants.forEach(v=>{const b=document.createElement('button');b.className='variant';b.textContent=v; b.onclick=()=>selectVariant(v); mv.appendChild(b)});
+      document.getElementById('orderBtn').href = buildWA(p.title);
+      modal.classList.add('open');
+    }
+    function selectVariant(v){ document.getElementById('orderBtn').href = buildWA(document.getElementById('modalTitle').textContent + ' - ' + v);} 
+    function closeModal(){modal.classList.remove('open');}
+
+    function buildWA(text){
+      const phone = '6283119234509'; // ganti dengan nomor Anda tanpa tanda +
+      const msg = encodeURIComponent('Halo Malav Jahe Merah, saya ingin memesan: '+text);
+      return `https://wa.me/${phone}?text=${msg}`;
+    }
+  </script>
+</body>
+</html>
